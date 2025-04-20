@@ -18,19 +18,19 @@
 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
   <div>
     <p>主页</p>
-    <img height="540" src="screenshot/home.jpg" width="270"/>
+    <img height="432" src="screenshot/home.jpg" width="270"/>
   </div>
   <div>
     <p>风扇</p>
-    <img height="540" src="screenshot/fan.jpg" width="270"/>
+    <img height="432" src="screenshot/fan.jpg" width="270"/>
   </div>
   <div>
     <p>空调</p>
-    <img height="540" src="screenshot/climate.jpg" width="270"/>
+    <img height="432" src="screenshot/climate.jpg" width="270"/>
   </div>
   <div>
     <p>扫地机器人 *蓝色区域是地图</p>
-    <img height="540" src="screenshot/vacuum.jpg" width="270"/>
+    <img height="432" src="screenshot/vacuum.jpg" width="270"/>
   </div>
 </div>
 
