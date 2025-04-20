@@ -1,0 +1,65 @@
+---
+title: 书房空调
+path: books-aircon
+subview: true
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template:
+          - switch_button
+        entity: switch.210006728604274_power
+        name: 电源
+        icon: mdi:power
+      - type: custom:button-card
+        entity: climate.210006728604274_climate
+        name: 设定温度
+        template:
+          - climate_temperature
+      - type: custom:button-card
+        entity: climate.210006728604274_climate
+        template:
+          - midea_climate_fan_speed
+      - type: custom:button-card
+        entity: climate.210006728604274_climate
+        template:
+          - midea_climate_mode
+      - square: false
+        type: grid
+        cards:
+          - type: custom:button-card
+            template:
+              - switch_button_mini
+            entity: switch.210006728604274_swing_horizontal
+            name: 左右扫风
+          - type: custom:button-card
+            template:
+              - switch_button_mini
+            entity: switch.210006728604274_swing_vertical
+            name: 上下扫风
+          - type: custom:button-card
+            template:
+              - switch_button_mini
+            entity: switch.210006728604274_eco_mode
+            name: ECO
+          - type: custom:button-card
+            template:
+              - switch_button_mini
+            entity: switch.210006728604274_comfort_mode
+            name: 舒省
+        columns: 2
+  - type: vertical-stack
+    cards:
+      - type: heading
+        icon: ''
+        heading: 新风
+        heading_style: title
+      - type: custom:button-card
+        template:
+          - fan_power_button
+        entity: fan.210006728604274_fresh_air
+        name: 电源
+      - type: custom:button-card
+        entity: fan.210006728604274_fresh_air
+        template:
+          - midea_freshair_speed_selector

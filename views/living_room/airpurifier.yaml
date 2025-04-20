@@ -1,0 +1,7 @@
+---
+title: 空气净化器
+path: living-airpurifier
+subview: true
+cards:
+  - type: vertical-stack
+    cards: []

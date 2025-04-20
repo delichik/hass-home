@@ -1,0 +1,76 @@
+---
+- type: entity
+  show_name: true
+  show_state: true
+  show_icon: true
+  color: blue
+  icon: mdi:dishwasher
+  visibility:
+    - condition: and
+      conditions:
+        - condition: numeric_state
+          entity: sensor.211106237561072_time_remaining
+          above: 0
+        - condition: state
+          entity: switch.211106237561072_power
+          state: 'on'
+  entity: sensor.211106237561072_time_remaining
+  tap_action:
+    action: none
+  name: 洗碗剩余时间
+- type: entity
+  show_name: true
+  show_state: true
+  show_icon: true
+  color: blue
+  entity: sensor.211106237561072_storage_remaining
+  icon: mdi:dishwasher
+  tap_action:
+    action: none
+  visibility:
+    - condition: numeric_state
+      entity: sensor.211106237561072_storage_remaining
+      above: 0
+  name: 保管剩余时间
+- type: entity
+  show_name: true
+  show_state: true
+  show_icon: true
+  color: red
+  entity: sensor.211106237561072_error_code
+  name: 洗碗错误
+  icon: mdi:dishwasher-alert
+  visibility:
+    - condition: state
+      entity: sensor.211106237561072_error_code
+      state_not: '0'
+  tap_action:
+    action: none
+- type: entity
+  show_name: true
+  show_state: false
+  show_icon: true
+  color: red
+  entity: binary_sensor.211106237561072_rinse_aid
+  name: 补充漂洗剂
+  icon: mdi:dishwasher-alert
+  tap_action:
+    action: none
+  visibility:
+    - condition: state
+      entity: binary_sensor.211106237561072_rinse_aid
+      state_not: 'off'
+- type: entity
+  show_name: true
+  show_state: false
+  show_icon: true
+  color: red
+  entity: binary_sensor.211106237561072_salt
+  name: 补充软水盐
+  icon: mdi:dishwasher-alert
+  tap_action:
+    action: none
+  visibility:
+    - condition: state
+      entity: binary_sensor.211106237561072_salt
+      state_not: 'off'

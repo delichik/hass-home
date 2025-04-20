@@ -1,0 +1,254 @@
+
+vacuum_strength_selector:
+  type: custom:button-card
+  name: 吸尘
+  template:
+    - extended_card
+  styles:
+    grid:
+      - grid-template-areas: '''n n n n n'' ''b0 b1 b2 b3 b4'' '
+      - grid-template-columns: '1fr 1fr 1fr 1fr 1fr'
+  custom_fields:
+    b0:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-off
+        name: 关
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "vacuum.set_fan_speed"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_speed: 'off'
+        variables:
+          active: "[[[ return entity.attributes['fan_speed'] == 'off' ]]]"
+    b1:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-minus
+        name: 静音
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "vacuum.set_fan_speed"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_speed: 'quite'
+        variables:
+          active: "[[[ return entity.attributes['fan_speed'] == 'quite' ]]]"
+    b2:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-plus
+        name: 强力
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "vacuum.set_fan_speed"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_speed: 'turbo'
+        variables:
+          active: "[[[ return entity.attributes['fan_speed'] == 'turbo' ]]]"
+    b3:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-1
+        name: MAX
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "vacuum.set_fan_speed"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_speed: 'max'
+        variables:
+          active: "[[[ return entity.attributes['fan_speed'] == 'max' ]]]"
+    b4:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-2
+        name: MAX+
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "vacuum.set_fan_speed"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_speed: 'max_plus'
+        variables:
+          active: "[[[ return entity.attributes['fan_speed'] == 'max_plus' ]]]"
+
+mop_strength_selector:
+  type: custom:button-card
+  name: 拖地
+  template:
+    - extended_card
+  styles:
+    grid:
+      - grid-template-areas: '''n n n n'' ''b0 b1 b2 b3'' '
+      - grid-template-columns: '1fr 1fr 1fr 1fr'
+  custom_fields:
+    b0:
+      card:
+        type: custom:button-card
+        icon: mdi:water-off-outline
+        name: 关
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "select.select_option"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            option: 'off'
+        variables:
+          active: "[[[ return entity.state == 'off' ]]]"
+    b1:
+      card:
+        type: custom:button-card
+        icon: mdi:water-minus-outline
+        name: 轻
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "select.select_option"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            option: 'mild'
+        variables:
+          active: "[[[ return entity.state == 'mild' ]]]"
+    b2:
+      card:
+        type: custom:button-card
+        icon: mdi:water-outline
+        name: 中
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "select.select_option"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            option: 'moderate'
+        variables:
+          active: "[[[ return entity.state == 'moderate' ]]]"
+    b3:
+      card:
+        type: custom:button-card
+        icon: mdi:water-plus-outline
+        name: 强
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "select.select_option"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            option: 'intense'
+        variables:
+          active: "[[[ return entity.state == 'intense' ]]]"
+
+mop_mode_selector:
+  type: custom:button-card
+  name: 拖地模式
+  template:
+    - extended_card
+  styles:
+    grid:
+      - grid-template-areas: '''n n n n'' ''b0 b1 b2 b3'' '
+      - grid-template-columns: '1fr 1fr 1fr 1fr'
+  custom_fields:
+    b0:
+      card:
+        type: custom:button-card
+        icon: mdi:numeric-1
+        name: 标准
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "select.select_option"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            option: 'standard'
+        variables:
+          active: "[[[ return entity.state == 'standard' ]]]"
+    b1:
+      card:
+        type: custom:button-card
+        icon: mdi:numeric-2
+        name: 深度
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "select.select_option"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            option: 'deep'
+        variables:
+          active: "[[[ return entity.state == 'deep' ]]]"
+    b2:
+      card:
+        type: custom:button-card
+        icon: mdi:numeric-3
+        name: 深度+
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "select.select_option"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            option: 'deep_plus'
+        variables:
+          active: "[[[ return entity.state == 'deep_plus' ]]]"
+    b3:
+      card:
+        type: custom:button-card
+        icon: mdi:hammer-wrench
+        name: 自定义
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: "call-service"
+          service: "select.select_option"
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            option: 'custom'
+        variables:
+          active: "[[[ return entity.state == 'custom' ]]]"

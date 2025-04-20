@@ -1,0 +1,7 @@
+---
+title: 监控
+path: living-camera
+subview: true
+cards:
+  - type: vertical-stack
+    cards: []

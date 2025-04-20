@@ -1,0 +1,223 @@
+---
+fan_card:
+  type: custom:button-card
+  show_entity_picture: false
+  template:
+    - device_card
+  variables:
+    with_button: true
+    button_action:
+      action: call-service
+      entity: "[[[ return entity.entity_id; ]]]"
+      service: "[[[ if (entity.state == 'off') return 'fan.turn_on'; else return 'fan.turn_off'; ]]]"
+      data:
+        entity_id: "[[[ return entity.entity_id; ]]]"
+
+fan_power_button:
+  type: custom:button-card
+  show_entity_picture: false
+  icon: mdi:fan
+  template:
+    - switch_button
+  tap_action:
+    action: call-service
+    entity: "[[[ return entity.entity_id; ]]]"
+    service: "[[[ if (entity.state == 'off') return 'fan.turn_on'; else return 'fan.turn_off'; ]]]"
+    data:
+      entity_id: "[[[ return entity.entity_id; ]]]"
+  state:
+    - value: 'on'
+      spin: true
+
+fan_oscillate_button:
+  type: custom:button-card
+  name: 扫风
+  icon: mdi:swap-horizontal
+  template:
+    - switch_button
+  tap_action:
+    action: call-service
+    service: 'fan.oscillate'
+    target:
+      entity_id: "[[[ return entity.entity_id ]]]"
+    data:
+      "oscillating": "[[[ return !entity.attributes['oscillating']; ]]]"
+  state:
+    - operator: template
+      value: "[[[ return entity.attributes['oscillating'] ]]]"
+      styles:
+        icon:
+          - background: var(--state-active-color)
+          - color: white
+
+xiaomi_fan_speed_selector:
+  type: custom:button-card
+  name: 风速
+  template:
+    - extended_card
+    - disable_when_off
+  styles:
+    grid:
+      - grid-template-areas: '''n n n'' ''b0 b1 b2'' '
+      - grid-template-columns: '1fr 1fr 1fr'
+  custom_fields:
+    b0:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-1
+        name: 一档
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'fan.set_percentage'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            percentage: 33
+        variables:
+          active: "[[[ return entity.attributes['percentage'] == 33 ]]]"
+    b1:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-2
+        name: 二档
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'fan.set_percentage'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            percentage: 66
+        variables:
+          active: "[[[ return entity.attributes['percentage'] == 66 ]]]"
+    b2:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-3
+        name: 三档
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'fan.set_percentage'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            percentage: 100
+        variables:
+          active: "[[[ return entity.attributes['percentage'] == 100 ]]]"
+
+midea_freshair_speed_selector:
+  type: custom:button-card
+  name: 风速
+  template:
+    - extended_card
+  styles:
+    grid:
+      - grid-template-areas: '''n n n n n'' ''b0 b1 b2 b3 b4'' '
+      - grid-template-columns: '1fr 1fr 1fr 1fr 1fr'
+  custom_fields:
+    b0:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-minus
+        name: 静音
+        entity: "[[[ return entity.entity_id ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'fan.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: Silent
+        state:
+          - operator: template
+            value: "[[[ return entity.attributes['preset_mode'] == 'Silent' ]]]"
+            styles:
+              icon:
+                - background: var(--state-active-color)
+                - color: white
+    b1:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-1
+        name: 低
+        entity: "[[[ return entity.entity_id ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'fan.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: Low
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == 'Low' ]]]"
+    b2:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-2
+        name: 中
+        entity: "[[[ return entity.entity_id ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'fan.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: Medium
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == 'Medium' ]]]"
+    b3:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-3
+        name: 高
+        entity: "[[[ return entity.entity_id ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'fan.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: High
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == 'High' ]]]"
+    b4:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-plus
+        name: 全速
+        entity: "[[[ return entity.entity_id ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'fan.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: Full
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == 'Full' ]]]"

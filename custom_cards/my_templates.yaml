@@ -1,0 +1,196 @@
+---
+transition_icon:
+  styles:
+    icon:
+      - transition: "background-color 0.5s, color 0.5s"
+
+transition_card:
+  styles:
+    card:
+      - transition: "background-color 0.5s, color 0.5s"
+
+transparent:
+  styles:
+    card:
+      - background: none
+      - box-shadow: none
+      - border: none
+
+disable_when:
+  variables:
+    disable_when: false
+  styles:
+    icon:
+      - opacity: >-
+          [[[ if (variables.disable_when)  return 0.3; else return 1; ]]]
+    name:
+      - opacity: >-
+          [[[ if (variables.disable_when)  return 0.3; else return 1; ]]]
+    state:
+      - opacity: >-
+          [[[ if (variables.disable_when)  return 0.3; else return 1; ]]]
+
+disable_when_unavailable:
+  template:
+    - disable_when
+  variables:
+    disable_when: "[[[ return entity !== undefined && entity.state == 'unavailable' ]]]"
+
+disable_when_off:
+  template:
+    - disable_when
+  variables:
+    disable_when: "[[[ return entity !== undefined && entity.state == 'off' ]]]"
+
+no_interactive:
+  tap_action:
+    action: none
+  hold_action:
+    action: none
+  double_tap_action:
+    action: none
+
+card:
+  template:
+    - no_interactive
+  styles:
+    grid:
+      - margin: 4px 12px
+
+extended_card:
+  template:
+    - card
+  show_icon: false
+  show_label: false
+  styles:
+    grid:
+      - margin-top: 0
+      - row-gap: 1ch;
+      - '--mdc-ripple-z-index': -1000
+    name:
+      - margin-bottom: 0
+      - justify-self: start
+      - font-size: 14px
+      - margin-left: 8px
+
+float_button:
+  type: custom:button-card
+  show_name: false
+  show_icon: true
+  show_state: false
+  show_last_changed: false
+  show_label: false
+  size: 28px
+  template:
+    - disable_when_unavailable
+    - transition_icon
+    - transition_card
+  styles:
+    card:
+      - max-width: 100%
+      - background: none
+      - box-shadow: none
+      - border: none
+      - height: 36px
+      - width: 36px
+      - font-size: 28px
+      - line-height: 28px
+      - border-radius: 50%
+      - background-color: "#cfe6f9"
+    icon:
+      - color: "#2196f3"
+  state:
+    - value: 'on'
+      styles:
+        card:
+          - background-color: var(--state-active-color)
+        icon:
+          - color: '#ffffff'
+
+selection_attribute_item:
+  type: custom:button-card
+  template:
+    - transparent
+    - transition_icon
+  variables:
+    active: false
+  styles:
+    name:
+      - font-size: 12px
+      - margin-top: 4px
+    icon:
+      - border-radius: 50%
+      - height: 28px
+      - width: 28px
+      - padding: 6px
+      - background-color: "#cfe6f9"
+      - color: "#2196f3"
+  state:
+    - operator: template
+      value: "[[[ return variables.active ]]]"
+      styles:
+        icon:
+          - background: var(--state-active-color)
+          - color: white
+
+switch_button:
+  type: custom:button-card
+  template:
+    - card
+    - transition_icon
+    - disable_when_unavailable
+  styles:
+    grid:
+      - grid-template-areas: '''i n'''
+      - grid-template-columns: 1fr 7fr
+    name:
+      - justify-self: start
+      - text-align: left
+        padding-left: 6px
+      - font-size: 14px
+    icon:
+      - height: 24px
+      - width: 24px
+      - padding: 6px
+      - font-size: 16px
+      - border-radius: 50%
+      - background-color: "#cfe6f9"
+      - color: "#2196f3"
+  tap_action:
+    action: toggle
+  state:
+    - value: 'on'
+      styles:
+        icon:
+          - background: var(--state-active-color)
+          - color: white
+
+switch_button_mini:
+  type: custom:button-card
+  template:
+    - card
+    - transition_icon
+    - disable_when_unavailable
+  color: "#000"
+  styles:
+    grid:
+      - grid-template-areas: '''i n'''
+      - grid-template-columns: 2fr 5fr
+    name:
+      - justify-self: start
+      - text-align: left
+      - padding-left: 4px
+      - font-size: 14px
+    icon:
+      - height: 26px
+      - width: 26px
+      - padding: 4px
+      - font-size: 18px
+      - background-color: rgba(0,0,0,0.08)
+      - border-radius: 50%
+  state:
+    - value: 'on'
+      styles:
+        icon:
+          - background: var(--state-active-color)
+          - color: white

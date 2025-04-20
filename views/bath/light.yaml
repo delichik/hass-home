@@ -1,0 +1,19 @@
+---
+title: 浴霸
+path: bath-light
+subview: true
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template:
+          - switch_button
+        entity: light.aupu_cn_672663288_s368m2_s_2
+        name: 灯
+        icon: mdi:power
+      - type: custom:button-card
+        template:
+          - aupu_climate_mode
+        entity: climate.aupu_cn_672663288_s368m2
+        name: 浴霸
+        icon: mdi:power

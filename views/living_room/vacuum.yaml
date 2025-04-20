@@ -1,0 +1,102 @@
+---
+title: 扫地机器人
+path: living-vacuum
+icon: mdi:robot-vacuum
+subview: true
+cards:
+  - type: custom:button-card
+    icon: >-
+      [[[ if (['paused', 'docked', 'unavailable'].includes(entity.state)) return 'mdi:play'; else return 'mdi:stop'; ]]]
+    name: >-
+      [[[
+        if (entity.state == 'paused') return '继续清扫';
+        else if (['docked', 'unavailable'].includes(entity.state)) return '开始清扫';
+        else return '停止清扫';
+      ]]]
+    entity: vacuum.p10s_pro
+    template:
+      - switch_button
+    tap_action:
+      action: call-service
+      entity: "[[[ return entity.entity_id; ]]]"
+      service: >-
+        [[[ if (['paused', 'docked', 'unavailable'].includes(entity.state)) return 'vacuum.start'; else return 'vacuum.stop'; ]]]
+      data:
+        entity_id: "[[[ return entity.entity_id; ]]]"
+  - type: custom:button-card
+    show_icon: false
+    show_label: false
+    show_name: false
+    aspect_ratio: 1/1
+    template:
+      - no_interactive
+    styles:
+      grid:
+        - row-gap: 0;
+        - margin-top: 0
+        - grid-template-areas: '''a'''
+        - grid-template-columns: '1fr'
+        - padding: 0
+        - background-image: "[[[ return 'url(\"' + states['image.p10s_pro_map_0'].attributes.entity_picture + '\")' ]]]"
+        - background-size: cover
+        - border-radius: "var(--ha-card-border-radius,12px)"
+      card:
+        - padding: 12px
+  - type: custom:button-card
+    icon: mdi:home
+    entity: vacuum.p10s_pro
+    template:
+      - switch_button
+    tap_action:
+      action: call-service
+      entity: "[[[ return entity.entity_id; ]]]"
+      service: "vacuum.pause"
+      data:
+        entity_id: "[[[ return entity.entity_id; ]]]"
+    visibility:
+      - condition: and
+        conditions:
+          - condition: state
+            entity: vacuum.p10s_pro
+            state_not: docked
+          - condition: state
+            entity: vacuum.p10s_pro
+            state_not: paused
+          - condition: state
+            entity: vacuum.p10s_pro
+            state_not: unavailable
+  - type: custom:button-card
+    icon: mdi:home
+    entity: vacuum.p10s_pro
+    template:
+      - switch_button
+    tap_action:
+      action: call-service
+      entity: "[[[ return entity.entity_id; ]]]"
+      service: "vacuum.return_to_base"
+      data:
+        entity_id: "[[[ return entity.entity_id; ]]]"
+    visibility:
+      - condition: and
+        conditions:
+          - condition: state
+            entity: vacuum.p10s_pro
+            state_not: docked
+          - condition: state
+            entity: vacuum.p10s_pro
+            state_not: returning
+          - condition: state
+            entity: vacuum.p10s_pro
+            state_not: unavailable
+  - type: custom:button-card
+    entity: vacuum.p10s_pro
+    template:
+      - vacuum_strength_selector
+  - type: custom:button-card
+    entity: select.p10s_pro_mop_mode
+    template:
+      - mop_mode_selector
+  - type: custom:button-card
+    entity: select.p10s_pro_mop_intensity
+    template:
+      - mop_strength_selector

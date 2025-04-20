@@ -1,0 +1,118 @@
+---
+- type: entity
+  show_name: true
+  show_state: true
+  show_icon: true
+  color: red
+  icon: mdi:robot-vacuum-alert
+  state_content: state
+  entity: binary_sensor.p10s_pro_water_shortage
+  visibility:
+    - condition: state
+      entity: binary_sensor.p10s_pro_water_shortage
+      state: 'on'
+  name: 机器人水箱
+  tap_action:
+    action: none
+- type: entity
+  show_name: true
+  show_state: false
+  show_icon: true
+  color: red
+  entity: sensor.p10s_pro_side_brush_time_left
+  icon: mdi:robot-vacuum-alert
+  visibility:
+    - condition: numeric_state
+      entity: sensor.p10s_pro_side_brush_time_left
+      below: 36000
+  name: 更换边刷
+  tap_action:
+    action: none
+- type: entity
+  show_name: true
+  show_state: false
+  show_icon: true
+  color: red
+  entity: sensor.p10s_pro_filter_time_left
+  icon: mdi:robot-vacuum-alert
+  visibility:
+    - condition: numeric_state
+      entity: sensor.p10s_pro_filter_time_left
+      below: 36000
+  name: 清理滤网
+  tap_action:
+    action: none
+- type: entity
+  show_name: true
+  show_state: false
+  show_icon: true
+  color: red
+  entity: sensor.p10s_pro_sensor_time_left
+  icon: mdi:robot-vacuum-alert
+  visibility:
+    - condition: numeric_state
+      entity: sensor.p10s_pro_sensor_time_left
+      below: 36000
+  name: 清理传感器
+  tap_action:
+    action: none
+- type: entity
+  show_name: true
+  show_state: true
+  show_icon: true
+  color: red
+  entity: sensor.p10s_pro_dock_error
+  icon: mdi:garage-alert
+  visibility:
+    - condition: state
+      entity: sensor.p10s_pro_dock_error
+      state_not: ok
+  name: 机器人基站
+  tap_action:
+    action: none
+- type: entity
+  show_name: true
+  show_state: true
+  show_icon: true
+  color: blue
+  entity: sensor.p10s_pro_cleaning_progress
+  visibility:
+    - condition: state
+      entity: vacuum.p10s_pro
+      state_not: docked
+  name: 清扫进度
+  tap_action:
+    action: none
+- type: entity
+  show_name: true
+  show_state: true
+  show_icon: true
+  color: blue
+  entity: vacuum.p10s_pro
+  icon: mdi:robot-vacuum
+  visibility:
+    - condition: or
+      conditions:
+        - condition: state
+          entity: vacuum.p10s_pro
+          state: cleaning
+        - condition: state
+          entity: vacuum.p10s_pro
+          state: returning
+  name: 机器人
+  tap_action:
+    action: none
+- type: entity
+  show_name: true
+  show_state: true
+  show_icon: true
+  color: red
+  entity: sensor.p10s_pro_vacuum_error
+  tap_action:
+    action: none
+  icon: mdi:alert
+  visibility:
+    - condition: state
+      entity: sensor.p10s_pro_vacuum_error
+      state_not: none
+  name: 机器人

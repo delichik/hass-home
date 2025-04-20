@@ -1,0 +1,272 @@
+---
+path: home
+cards:
+  - type: vertical-stack # 门厅
+    cards:
+      - type: heading
+        icon: ''
+        heading: 门厅
+        heading_style: title
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: red
+            entity: sensor.shuangliu_precipitation_24h
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: accent
+            entity: sensor.shuangliu_temperature
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: blue
+            entity: sensor.shuangliu_humidity
+      - square: false
+        type: grid
+        cards:
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: light.xiaomi_cn_750399818_ceil01_s_2
+            name: 灯
+            icon: mdi:light-recessed
+            variables:
+              with_button: true
+              button_action:
+                action: toggle
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: sensor.midr_cn_1107165351_ph300_battery_level_p_5_1
+            name: 猫眼
+            icon: mdi:doorbell-video
+            tap_action:
+              action: navigate
+              navigation_path: living-cat_eye
+        columns: 2
+  - type: vertical-stack # 客厅
+    cards:
+      - type: heading
+        icon: ''
+        heading: 客厅
+        heading_style: title
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: accent
+            entity: sensor.miaomiaoc_cn_blt_3_1inibm6i4ck00_t9_temperature_p_3_1001
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: blue
+            entity: sensor.miaomiaoc_cn_blt_3_1inibm6i4ck00_t9_relative_humidity_p_3_1002
+      - square: false
+        type: grid
+        cards:
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: vacuum.p10s_pro
+            name: 扫地机器人
+            icon: mdi:robot-vacuum
+            tap_action:
+              action: navigate
+              navigation_path: living-vacuum
+          - type: custom:button-card
+            template:
+              - fan_card
+            entity: fan.dmaker_cn_810170850_p8_s_2
+            name: 风扇
+            icon: mdi:fan
+            tap_action:
+              action: navigate
+              navigation_path: living-fan
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: switch.chuangmi_cn_1074898616_069a01_motion_detection_p_5_1
+            name: 监控
+            icon: mdi:cctv
+            tap_action:
+              action: navigate
+              navigation_path: living-camera
+        columns: 2
+  - type: vertical-stack # 主卧
+    cards:
+      - type: heading
+        icon: ''
+        heading: 主卧
+        heading_style: title
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: accent
+            entity: sensor.211106242237414_indoor_temperature
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: blue
+            entity: sensor.211106242237414_indoor_humidity
+      - square: false
+        type: grid
+        cards:
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: climate.211106242237414_climate
+            name: 空调
+            icon: mdi:air-conditioner
+            tap_action:
+              action: navigate
+              navigation_path: main_bed-aircon
+            variables:
+              with_button: true
+              button_action:
+                action: toggle
+          - type: custom:button-card
+            template:
+              - fan_card
+            entity: fan.211106242237414_fresh_air
+            name: 新风
+            icon: mdi:weather-windy
+            tap_action:
+              action: navigate
+              navigation_path: main_bed-aircon
+          - type: custom:button-card
+            template:
+              - fan_card
+            icon: mdi:fan
+            entity: fan.dmaker_cn_510438740_p8_s_2
+            name: 风扇
+            tap_action:
+              action: navigate
+              navigation_path: main_bed-fan
+        columns: 2
+  - type: vertical-stack # 书房
+    cards:
+      - type: heading
+        icon: ''
+        heading: 书房
+        heading_style: title
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: accent
+            entity: sensor.210006728604274_indoor_temperature
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: blue
+            entity: sensor.210006728604274_indoor_humidity
+      - square: false
+        type: grid
+        cards:
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: climate.210006728604274_climate
+            name: 空调
+            icon: mdi:air-conditioner
+            tap_action:
+              action: navigate
+              navigation_path: books-aircon
+            variables:
+              with_button: true
+              button_action:
+                action: toggle
+          - type: custom:button-card
+            template:
+              - fan_card
+            entity: fan.210006728604274_fresh_air
+            name: 新风
+            icon: mdi:weather-windy
+            tap_action:
+              action: navigate
+              navigation_path: books-aircon
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: sensor.xiaomi_cn_831890581_va3_air_quality_p_3_3
+            name: 空气净化器
+            icon: mdi:air-purifier
+            tap_action:
+              action: navigate
+              navigation_path: living-airpurifier
+            variables:
+              with_button: true
+              button_entity: switch.xiaomi_cn_831890581_va3_on_p_2_1
+              button_action:
+                action: toggle
+        columns: 2
+  - type: vertical-stack # 厨房
+    cards:
+      - type: heading
+        icon: ''
+        heading: 厨房
+        heading_style: title
+      - square: false
+        type: grid
+        cards:
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: switch.yeelink_cn_1113966850_ylsw4_on_p_2_1
+            name: 灯
+            icon: mdi:light-recessed
+            variables:
+              with_button: true
+              button_action:
+                action: toggle
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: switch.211106237561072_power
+            name: 洗碗机
+            icon: mdi:dishwasher
+            tap_action:
+              action: navigate
+              navigation_path: kitchen-dishwasher
+            variables:
+              with_button: true
+              button_action:
+                action: toggle
+        columns: 2
+  - type: vertical-stack # 厕所
+    cards:
+      - type: heading
+        icon: ''
+        heading_style: title
+        heading: 厕所
+      - square: false
+        type: grid
+        cards:
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: light.aupu_cn_672663288_s368m2_s_2
+            name: 灯
+            icon: mdi:light-recessed
+            variables:
+              with_button: true
+              button_action:
+                action: toggle
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: climate.aupu_cn_672663288_s368m2
+            name: 浴霸
+            icon: mdi:heat-pump-outline
+            tap_action:
+              action: navigate
+              navigation_path: bath-light
+            variables:
+              with_button: true
+              button_action:
+                action: toggle
+        columns: 2
+badges: !include_dir_merge_list ../notice

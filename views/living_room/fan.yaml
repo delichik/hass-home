@@ -1,0 +1,56 @@
+---
+title: 客厅风扇
+path: living-fan
+subview: true
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template:
+          - fan_power_button
+        entity: fan.dmaker_cn_810170850_p8_s_2
+        name: 电源
+
+      - type: custom:button-card
+        entity: fan.dmaker_cn_810170850_p8_s_2
+        template:
+          - xiaomi_fan_speed_selector
+
+      - type: custom:button-card
+        template:
+          - fan_oscillate_button
+        entity: fan.dmaker_cn_810170850_p8_s_2
+
+      - type: custom:button-card
+        template:
+          - switch_button
+        entity: switch.dmaker_cn_810170850_p8_physical_controls_locked_p_3_1
+        name: 童锁
+        icon: mdi:lock-outline
+
+      - type: custom:button-card
+        template:
+          - switch_button
+        entity: switch.dmaker_cn_810170850_p8_alarm_p_2_11
+        name: 提示音
+        icon: mdi:volume-high
+
+      - type: custom:button-card
+        template:
+          - switch_button
+        entity: switch.dmaker_cn_810170850_p8_brightness_p_2_12
+        name: 指示灯
+        icon: mdi:lightbulb
+        columns: 2
+
+      - type: custom:mushroom-number-card
+        name: 延时关闭
+        entity: number.dmaker_cn_810170850_p8_off_delay_time_p_2_10
+        fill_container: false
+        tap_action:
+          action: none
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+

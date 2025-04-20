@@ -1,0 +1,7 @@
+---
+title: 洗碗机
+path: kitchen-dishwasher
+subview: true
+cards:
+  - type: vertical-stack
+    cards: []

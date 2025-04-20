@@ -1,0 +1,58 @@
+---
+device_card:
+  type: custom:button-card
+  variables:
+    with_button: false
+    button_entity: ''
+    button_icon: mdi:power
+    button_action:
+      action: none
+  show_entity_picture: false
+  template:
+    - disable_when_unavailable
+  name: ''
+  aspect_ratio: 4/3
+  show_state: true
+  styles:
+    grid:
+      - position: relative
+      - padding-left: 12px
+      - padding-right: 12px
+      - padding-top: 0
+      - padding-bottom: 16px
+    icon:
+      - color: '#535d6d'
+      - height: 36px
+      - width: 36px
+      - margin-top: 16px
+    name:
+      - align-self: middle
+      - justify-self: start
+      - font-size: 80%
+    state:
+      - justify-self: start
+      - color: gray
+      - font-size: 80%
+    img_cell:
+      - justify-content: start
+      - align-items: start
+      - margin: none
+    custom_fields:
+      button:
+        - position: absolute
+        - top: 20px
+        - right: 12px
+        - display: "[[[ if (variables.with_button) return 'unset'; else return 'none'; ]]]"
+  custom_fields:
+    button:
+      card:
+        type: custom:button-card
+        template:
+          - float_button
+          - no_interactive
+        entity: >-
+          [[[ if (variables.button_entity != '') return variables.button_entity; else return entity.entity_id; ]]]
+        icon: "[[[ return variables.button_icon ]]]"
+        tap_action: >-
+          [[[ if (entity.state == 'unavailable') return 'none'; else return variables.button_action; ]]]
+

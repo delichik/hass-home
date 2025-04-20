@@ -1,0 +1,49 @@
+
+- type: entity
+  show_name: true
+  show_state: true
+  show_icon: true
+  color: red
+  name: 猫眼电量
+  tap_action:
+    action: none
+  visibility:
+    - condition: numeric_state
+      entity: sensor.midr_cn_1107165351_ph300_battery_level_p_5_1
+      below: 21
+  entity: sensor.midr_cn_1107165351_ph300_battery_level_p_5_1
+- type: entity
+  show_name: true
+  show_state: false
+  show_icon: true
+  color: primary
+  name: 监控移动检测
+  tap_action:
+    action: none
+  visibility:
+    - condition: state
+      entity: switch.chuangmi_cn_1074898616_069a01_motion_detection_p_5_1
+      state: 'on'
+  entity: switch.chuangmi_cn_1074898616_069a01_motion_detection_p_5_1
+- type: entity
+  show_name: true
+  show_state: false
+  show_icon: true
+  color: orange
+  entity: input_boolean.zan_ting_qing_ji_ji_hua
+  icon: mdi:robot-vacuum-off
+  visibility:
+    - condition: state
+      entity: input_boolean.zan_ting_qing_ji_ji_hua
+      state: 'on'
+- type: entity
+  show_name: true
+  show_state: false
+  show_icon: true
+  color: primary
+  entity: binary_sensor.ke_ren_zai_jia
+  name: 客人在家
+  visibility:
+    - condition: state
+      entity: binary_sensor.ke_ren_zai_jia
+      state: 'on'

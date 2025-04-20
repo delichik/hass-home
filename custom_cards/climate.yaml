@@ -1,0 +1,384 @@
+---
+
+climate_temperature:
+  type: custom:button-card
+  template:
+    - extended_card
+  styles:
+    grid:
+      - grid-template-areas: '''n n n'' ''minus status plus'''
+      - grid-template-columns: 2fr 3fr 2fr
+  custom_fields:
+    minus:
+      card:
+        type: custom:button-card
+        template:
+          - transparent
+        show_name: false
+        icon: mdi:minus
+        size: 32px
+        styles:
+          card:
+            - padding-top: 16px
+            - padding-bottom: 16px
+        tap_action:
+          action: call-service
+          service: climate.set_temperature
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            temperature: >-
+              [[[ return (entity.attributes.target_temperature-entity.attributes.target_temp_step).toFixed(1)]]]
+    status:
+      card:
+        type: custom:button-card
+        name: "[[[ return entity.attributes.target_temperature.toFixed(1) ]]]"
+        show_icon: false
+        template:
+          - transparent
+        styles:
+          name:
+            - font-size: 32px
+            - font-weight: bold
+          card:
+            - padding-top: 16px
+            - padding-bottom: 16px
+    plus:
+      card:
+        type: custom:button-card
+        template:
+          - transparent
+        show_name: false
+        icon: mdi:plus
+        size: 32px
+        styles:
+          card:
+            - padding-top: 16px
+            - padding-bottom: 16px
+        tap_action:
+          action: call-service
+          service: climate.set_temperature
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            temperature: >-
+              [[[ return (entity.attributes.target_temperature+entity.attributes.target_temp_step).toFixed(1)]]]
+
+midea_climate_fan_speed:
+  type: custom:button-card
+  name: 风速
+  template:
+    - extended_card
+    - disable_when_off
+  styles:
+    grid:
+      - grid-template-areas: '''n n n'' ''b0 b1 b2'' ''b3 b4 b5'' '
+      - grid-template-columns: '1fr 1fr 1fr'
+  custom_fields:
+    b0:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-minus
+        name: 静音
+        entity: "[[[ return entity.entity_id ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'climate.set_fan_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_mode: silent
+        variables:
+          active: "[[[ return entity.attributes['fan_mode'] == 'silent' ]]]"
+    b1:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-1
+        name: 低
+        entity: "[[[ return entity.entity_id ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'climate.set_fan_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_mode: low
+        variables:
+          active: "[[[ return entity.attributes['fan_mode'] == 'low' ]]]"
+
+    b2:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-2
+        name: 中
+        entity: "[[[ return entity.entity_id ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'climate.set_fan_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_mode: medium
+        variables:
+          active: "[[[ return entity.attributes['fan_mode'] == 'medium' ]]]"
+    b3:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-speed-3
+        name: 高
+        entity: "[[[ return entity.entity_id ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'climate.set_fan_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_mode: high
+        variables:
+          active: "[[[ return entity.attributes['fan_mode'] == 'high' ]]]"
+    b4:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-plus
+        name: 全速
+        entity: "[[[ return entity.entity_id ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'climate.set_fan_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_mode: full
+        variables:
+          active: "[[[ return entity.attributes['fan_mode'] == 'full' ]]]"
+    b5:
+      card:
+        type: custom:button-card
+        icon: mdi:fan-auto
+        name: 自动
+        entity: "[[[ return entity.entity_id ]]]"
+        variables:
+          active: "[[[ return entity.attributes['fan_mode'] == 'auto' ]]]"
+        template:
+          - disable_when_off
+          - selection_attribute_item
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'climate.set_fan_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            fan_mode: auto
+
+midea_climate_mode:
+  type: custom:button-card
+  name: 模式
+  template:
+    - extended_card
+  styles:
+    grid:
+      - grid-template-areas: '''n n n n n'' ''b0 b1 b2 b3 b4'' '
+      - grid-template-columns: '1fr 1fr 1fr 1fr 1fr'
+  custom_fields:
+    b0:
+      card:
+        type: custom:button-card
+        icon: mdi:alpha-a
+        name: 自动
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_hvac_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            hvac_mode: auto
+        variables:
+          active: "[[[ return entity.attributes['mode'] == 0 ]]]"
+    b1:
+      card:
+        type: custom:button-card
+        icon: mdi:heat-wave
+        name: 供暖
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_hvac_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            hvac_mode: heat
+        variables:
+          active: "[[[ return entity.attributes['mode'] == 1 ]]]"
+    b2:
+      card:
+        type: custom:button-card
+        icon: mdi:snowflake
+        name: 制冷
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_hvac_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            hvac_mode: cool
+        variables:
+          active: "[[[ return entity.attributes['mode'] == 2 ]]]"
+    b3:
+      card:
+        type: custom:button-card
+        icon: mdi:water-minus-outline
+        name: 除湿
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_hvac_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            hvac_mode: dry
+        variables:
+          active: "[[[ return entity.attributes['mode'] == 3 ]]]"
+    b4:
+      card:
+        type: custom:button-card
+        icon: mdi:weather-windy
+        name: 送风
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_hvac_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            hvac_mode: fan_only
+        variables:
+          active: "[[[ return entity.attributes['mode'] == 4 ]]]"
+
+aupu_climate_mode:
+  type: custom:button-card
+  name: 模式
+  template:
+    - extended_card
+  styles:
+    grid:
+      - grid-template-areas: '''n n n'' ''b0 b1 b2'' ''b3 b4 b5'' '
+      - grid-template-columns: '1fr 1fr 1fr'
+  custom_fields:
+    b0:
+      card:
+        type: custom:button-card
+        icon: mdi:power-standby
+        name: 待机
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: 待机
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == '待机' ]]]"
+    b1:
+      card:
+        type: custom:button-card
+        icon: mdi:thermometer-minus
+        name: 暖风弱
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: 暖风弱
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == '暖风弱' ]]]"
+    b2:
+      card:
+        type: custom:button-card
+        icon: mdi:thermometer-plus
+        name: 暖风强
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: 暖风强
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == '暖风强' ]]]"
+    b3:
+      card:
+        type: custom:button-card
+        icon: mdi:fan
+        name: 吹风
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: 吹风
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == '吹风' ]]]"
+    b4:
+      card:
+        type: custom:button-card
+        icon: mdi:refresh
+        name: 换气
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: 换气
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == '换气' ]]]"
+    b5:
+      card:
+        type: custom:button-card
+        icon: mdi:water-minus-outline
+        name: 干燥
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: 干燥
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == '干燥' ]]]"
