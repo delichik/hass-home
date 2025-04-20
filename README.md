@@ -15,7 +15,7 @@
 
 ## Screenshot
 
-<div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+<div style="display: grid; grid-template-columns: 1fr 1fr;">
   <div>
     <p>主页</p>
     <img height="432" src="screenshot/home.jpg" width="270"/>
