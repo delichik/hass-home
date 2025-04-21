@@ -146,7 +146,7 @@ switch_button:
     name:
       - justify-self: start
       - text-align: left
-        padding-left: 6px
+      - padding-left: 6px
       - font-size: 14px
     icon:
       - height: 24px
@@ -194,3 +194,110 @@ switch_button_mini:
         icon:
           - background: var(--state-active-color)
           - color: white
+
+image:
+  type: custom:button-card
+  show_icon: false
+  show_label: false
+  show_name: false
+  variables:
+    image_url: ""
+  template:
+    - no_interactive
+  styles:
+    grid:
+      - row-gap: 0;
+      - margin-top: 0
+      - grid-template-areas: '''a'''
+      - grid-template-columns: '1fr'
+      - padding: 0
+      - background-image: "[[[ return variables.image_url; ]]]"
+      - background-size: cover
+      - border-radius: "var(--ha-card-border-radius,12px)"
+    card:
+      - padding: 12px
+
+dpad_button:
+  type: custom:button-card
+  show_name: false
+  aspect_ratio: 1/1
+  template:
+    - disable_when_unavailable
+  styles:
+    icon:
+      - font-size: 16px
+      - color: "#2196f3"
+    card:
+      - margin: 0
+      - padding: 0
+      - border: none
+      - box-shadow: none
+  tap_action:
+    action: toggle
+  state:
+    - value: 'on'
+      styles:
+        icon:
+          - background: var(--state-active-color)
+          - color: white
+
+dpad:
+  type: custom:button-card
+  template:
+    - no_interactive
+    - disable_when_unavailable
+  aspect_ratio: 1/1
+  show_icon: false
+  show_name: false
+  styles:
+    grid:
+      - padding: 0
+      - grid-template-areas: '''p1 up p2'' ''left ok right'' ''back down menu'''
+      - grid-template-columns: "1fr 1fr 1fr"
+      - grid-template-rows: auto
+    card:
+      - margin: 0
+      - padding: 32px
+  custom_fields:
+    up:
+      card:
+        type: custom:button-card
+        template:
+          - dpad_button
+        entity: "[[[ return variables.up; ]]]"
+    left:
+      card:
+        type: custom:button-card
+        template:
+          - dpad_button
+        entity: "[[[ return variables.left; ]]]"
+    ok:
+      card:
+        type: custom:button-card
+        template:
+          - dpad_button
+        entity: "[[[ return variables.ok; ]]]"
+    right:
+      card:
+        type: custom:button-card
+        template:
+          - dpad_button
+        entity: "[[[ return variables.right; ]]]"
+    back:
+      card:
+        type: custom:button-card
+        template:
+          - dpad_button
+        entity: "[[[ return variables.back; ]]]"
+    down:
+      card:
+        type: custom:button-card
+        template:
+          - dpad_button
+        entity: "[[[ return variables.down; ]]]"
+    menu:
+      card:
+        type: custom:button-card
+        template:
+          - dpad_button
+        entity: "[[[ return variables.menu; ]]]"

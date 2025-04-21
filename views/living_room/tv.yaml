@@ -1,0 +1,41 @@
+---
+title: 客厅电视
+path: living-tv
+subview: true
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        aspect_ratio: 16/9
+        entity: media_player.tv
+        template:
+          - image
+        variables:
+          image_url: "[[[ return 'url(\"' + entity.attributes.entity_picture + '\")'; ]]]"
+      - type: custom:button-card
+        template:
+          - switch_button
+          - disable_when
+        entity: media_player.tv
+        name: 电源
+        tap_action:
+          action: "[[[ return ['off', 'unavailable'].includes(entity.state) ? 'none' : 'call-service'; ]]]"
+          entity: "[[[ return entity.entity_id; ]]]"
+          service: >-
+            [[[ return ['off', 'unavailable'].includes(entity.state) ? 'media_player.turn_on' : 'media_player.turn_off'; ]]]
+          data:
+            entity_id: "[[[ return entity.entity_id; ]]]"
+        variables:
+          disable_when: "[[[ return ['off', 'unavailable'].includes(entity.state) ]]]"
+      - type: custom:button-card
+        entity: media_player.tv
+        variables:
+          up: button.dpad_up
+          down: button.dpad_down
+          left: button.dpad_left
+          right: button.dpad_right
+          ok: button.dpad_ok
+          back: button.dpad_back
+          menu: button.dpad_menu
+        template:
+          - dpad

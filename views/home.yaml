@@ -42,9 +42,40 @@ cards:
             entity: sensor.midr_cn_1107165351_ph300_battery_level_p_5_1
             name: 猫眼
             icon: mdi:doorbell-video
-            tap_action:
-              action: navigate
-              navigation_path: living-cat_eye
+            state_display: >-
+              [[[
+                function beautifyTime(mistiming){
+                    mistiming = Math.round(mistiming / 1000);
+                    if (mistiming < 0) mistiming = 0;
+                    if (mistiming < 10) return '刚刚';
+                    var postfix = '前';
+                    var arrr = ['年','个月','天','小时','分钟','秒'];
+                    var arrn = [31536000,2592000,86400,3600,60,1];
+                    for (var i=0; i<7; i++) {
+                        var inm = Math.floor(mistiming/arrn[i]);
+                        if (inm!=0) {
+                            return inm+arrr[i] + postfix;
+                        }
+                    }
+                }
+                var at_the_door_at = Date.parse(states['event.midr_cn_1107165351_ph300_someone_at_the_door_e_2_4'].state);
+                var passby_at = Date.parse(states['event.midr_cn_1107165351_ph300_someone_passed_by_e_2_3'].state);
+                var ring_at = Date.parse(states['event.midr_cn_1107165351_ph300_doorbell_ring_e_2_1'].state);
+                var now = Date.now();
+                if (at_the_door_at == passby_at && passby_at == ring_at && ring_at == 0) {
+                  return '无事件';
+                } else if (at_the_door_at > passby_at && at_the_door_at > ring_at) {
+                  return beautifyTime(now - at_the_door_at) + '门口有人';
+                } else if (passby_at > at_the_door_at && passby_at > ring_at) {
+                  return beautifyTime(now - passby_at) + '有人经过';
+                } else {
+                  return beautifyTime(now - ring_at) + '有人按门铃';
+                }
+              ]]]
+            variables:
+              tap_action:
+                action: navigate
+                navigation_path: living-cat_eye
         columns: 2
   - type: vertical-stack # 客厅
     cards:
@@ -72,27 +103,84 @@ cards:
             entity: vacuum.p10s_pro
             name: 扫地机器人
             icon: mdi:robot-vacuum
-            tap_action:
-              action: navigate
-              navigation_path: living-vacuum
+            variables:
+              tap_action:
+                action: navigate
+                navigation_path: living-vacuum
+              with_button: true
+              button_icon: >-
+                [[[ if (['paused', 'docked', 'unavailable'].includes(entity.state)) return 'mdi:play'; else return 'mdi:stop'; ]]]
+              button_action:
+                action: call-service
+                entity: "[[[ return entity.entity_id; ]]]"
+                service: >-
+                  [[[ if (['paused', 'docked', 'unavailable'].includes(entity.state)) return 'vacuum.start'; else return 'vacuum.stop'; ]]]
+                data:
+                  entity_id: "[[[ return entity.entity_id; ]]]"
           - type: custom:button-card
             template:
               - fan_card
             entity: fan.dmaker_cn_810170850_p8_s_2
             name: 风扇
             icon: mdi:fan
-            tap_action:
-              action: navigate
-              navigation_path: living-fan
+            variables:
+              tap_action:
+                action: navigate
+                navigation_path: living-fan
           - type: custom:button-card
             template:
               - device_card
             entity: switch.chuangmi_cn_1074898616_069a01_motion_detection_p_5_1
             name: 监控
+            state_display: >-
+              [[[
+                function beautifyTime(mistiming){
+                    mistiming = Math.round(mistiming / 1000);
+                    if (mistiming < 0) mistiming = 0;
+                    if (mistiming < 10) return '刚刚';
+                    var postfix = '前';
+                    var arrr = ['年','个月','天','小时','分钟','秒'];
+                    var arrn = [31536000,2592000,86400,3600,60,1];
+                    for (var i=0; i<7; i++) {
+                        var inm = Math.floor(mistiming/arrn[i]);
+                        if (inm!=0) {
+                            return inm+arrr[i] + postfix;
+                        }
+                    }
+                }
+                var motion_at = Date.parse(states['event.chuangmi_cn_1074898616_069a01_event_motion_e_15_1'].state);
+                var people_at = Date.parse(states['event.chuangmi_cn_1074898616_069a01_people_motion_e_15_2'].state);
+                var now = Date.now();
+                if (motion_at == people_at && people_at == 0) {
+                  return '无事件';
+                } else if (motion_at > people_at) {
+                  return beautifyTime(now - motion_at) + '物体移动';
+                } else {
+                  return beautifyTime(now - motion_at) + '有人移动';
+                }
+              ]]]
             icon: mdi:cctv
-            tap_action:
-              action: navigate
-              navigation_path: living-camera
+            variables:
+              tap_action:
+                action: navigate
+                navigation_path: living-camera
+          - type: custom:button-card
+            template:
+              - device_card
+            entity: media_player.tv
+            name: 电视
+            icon: mdi:television
+            variables:
+              tap_action:
+                action: navigate
+                navigation_path: living-tv
+              with_button: "[[[ return entity.state != 'unavailable']]]"
+              button_action:
+                action: call-service
+                entity: "[[[ return entity.entity_id; ]]]"
+                service: "media_player.turn_off"
+                data:
+                  entity_id: "[[[ return entity.entity_id; ]]]"
         columns: 2
   - type: vertical-stack # 主卧
     cards:
@@ -120,10 +208,10 @@ cards:
             entity: climate.211106242237414_climate
             name: 空调
             icon: mdi:air-conditioner
-            tap_action:
-              action: navigate
-              navigation_path: main_bed-aircon
             variables:
+              tap_action:
+                action: navigate
+                navigation_path: main_bed-aircon
               with_button: true
               button_action:
                 action: toggle
@@ -133,18 +221,20 @@ cards:
             entity: fan.211106242237414_fresh_air
             name: 新风
             icon: mdi:weather-windy
-            tap_action:
-              action: navigate
-              navigation_path: main_bed-aircon
+            variables:
+              tap_action:
+                action: navigate
+                navigation_path: main_bed-aircon
           - type: custom:button-card
             template:
               - fan_card
             icon: mdi:fan
             entity: fan.dmaker_cn_510438740_p8_s_2
             name: 风扇
-            tap_action:
-              action: navigate
-              navigation_path: main_bed-fan
+            variables:
+              tap_action:
+                action: navigate
+                navigation_path: main_bed-fan
         columns: 2
   - type: vertical-stack # 书房
     cards:
@@ -172,10 +262,10 @@ cards:
             entity: climate.210006728604274_climate
             name: 空调
             icon: mdi:air-conditioner
-            tap_action:
-              action: navigate
-              navigation_path: books-aircon
             variables:
+              tap_action:
+                action: navigate
+                navigation_path: books-aircon
               with_button: true
               button_action:
                 action: toggle
@@ -185,19 +275,20 @@ cards:
             entity: fan.210006728604274_fresh_air
             name: 新风
             icon: mdi:weather-windy
-            tap_action:
-              action: navigate
-              navigation_path: books-aircon
+            variables:
+              tap_action:
+                action: navigate
+                navigation_path: books-aircon
           - type: custom:button-card
             template:
               - device_card
             entity: sensor.xiaomi_cn_831890581_va3_air_quality_p_3_3
             name: 空气净化器
             icon: mdi:air-purifier
-            tap_action:
-              action: navigate
-              navigation_path: living-airpurifier
             variables:
+              tap_action:
+                action: navigate
+                navigation_path: living-airpurifier
               with_button: true
               button_entity: switch.xiaomi_cn_831890581_va3_on_p_2_1
               button_action:
@@ -228,11 +319,17 @@ cards:
             entity: switch.211106237561072_power
             name: 洗碗机
             icon: mdi:dishwasher
-            tap_action:
-              action: navigate
-              navigation_path: kitchen-dishwasher
+            state_display: >-
+              [[[
+                var state = states['sensor.211106237561072_progress'].state;
+                var t = {'Dry':'烘干','Rinse':'冲洗','Wash':'清洗','Pre-wash':'预洗','Idle':'待机'};
+                return t[state] == null ? state : t[state];
+              ]]]
             variables:
-              with_button: true
+              tap_action:
+                action: navigate
+                navigation_path: kitchen-dishwasher
+              with_button: "[[[ return entity.state == 'on'; ]]]"
               button_action:
                 action: toggle
         columns: 2
@@ -261,12 +358,18 @@ cards:
             entity: climate.aupu_cn_672663288_s368m2
             name: 浴霸
             icon: mdi:heat-pump-outline
-            tap_action:
-              action: navigate
-              navigation_path: bath-light
+            state_display: "[[[ return entity.attributes.preset_mode ]]]"
             variables:
-              with_button: true
+              tap_action:
+                action: navigate
+                navigation_path: bath-light
+              with_button: "[[[ return entity.attributes.preset_mode != '待机'; ]]]"
               button_action:
-                action: toggle
+                action: call-service
+                entity: "[[[ return entity.entity_id ]]]"
+                service: climate.set_preset_mode
+                data:
+                  preset_mode: "待机"
+                  entity_id: "[[[ return entity.entity_id ]]]"
         columns: 2
 badges: !include_dir_merge_list ../notice

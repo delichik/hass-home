@@ -24,24 +24,11 @@ cards:
       data:
         entity_id: "[[[ return entity.entity_id; ]]]"
   - type: custom:button-card
-    show_icon: false
-    show_label: false
-    show_name: false
     aspect_ratio: 1/1
     template:
-      - no_interactive
-    styles:
-      grid:
-        - row-gap: 0;
-        - margin-top: 0
-        - grid-template-areas: '''a'''
-        - grid-template-columns: '1fr'
-        - padding: 0
-        - background-image: "[[[ return 'url(\"' + states['image.p10s_pro_map_0'].attributes.entity_picture + '\")' ]]]"
-        - background-size: cover
-        - border-radius: "var(--ha-card-border-radius,12px)"
-      card:
-        - padding: 12px
+      - image
+    variables:
+      image_url: "[[[ return 'url(\"' + states['image.p10s_pro_map_0'].attributes.entity_picture + '\")'; ]]]"
   - type: custom:button-card
     icon: mdi:home
     entity: vacuum.p10s_pro
