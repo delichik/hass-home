@@ -29,7 +29,7 @@ cards:
           - type: custom:button-card
             template:
               - device_card
-            entity: light.xiaomi_cn_750399818_ceil01_s_2
+            entity: light.xiaomi_cn_750399818_ceil01_s_2_light
             name: 灯
             icon: mdi:light-recessed
             variables:
@@ -64,9 +64,9 @@ cards:
                 var now = Date.now();
                 if (at_the_door_at == passby_at && passby_at == ring_at && ring_at == 0) {
                   return '无事件';
-                } else if (at_the_door_at > passby_at && at_the_door_at > ring_at) {
+                } else if (at_the_door_at >= passby_at && at_the_door_at >= ring_at) {
                   return beautifyTime(now - at_the_door_at) + '门口有人';
-                } else if (passby_at > at_the_door_at && passby_at > ring_at) {
+                } else if (passby_at >= at_the_door_at && passby_at >= ring_at) {
                   return beautifyTime(now - passby_at) + '有人经过';
                 } else {
                   return beautifyTime(now - ring_at) + '有人按门铃';
@@ -120,7 +120,7 @@ cards:
           - type: custom:button-card
             template:
               - fan_card
-            entity: fan.dmaker_cn_810170850_p8_s_2
+            entity: fan.dmaker_cn_810170850_p8_s_2_fan
             name: 风扇
             icon: mdi:fan
             variables:
@@ -213,6 +213,7 @@ cards:
                 action: navigate
                 navigation_path: main_bed-aircon
               with_button: true
+              button_entity: switch.211106242237414_power
               button_action:
                 action: toggle
           - type: custom:button-card
@@ -229,7 +230,7 @@ cards:
             template:
               - fan_card
             icon: mdi:fan
-            entity: fan.dmaker_cn_510438740_p8_s_2
+            entity: fan.dmaker_cn_510438740_p8_s_2_fan
             name: 风扇
             variables:
               tap_action:
@@ -267,6 +268,7 @@ cards:
                 action: navigate
                 navigation_path: books-aircon
               with_button: true
+              button_entity: switch.210006728604274_power
               button_action:
                 action: toggle
           - type: custom:button-card
@@ -345,7 +347,7 @@ cards:
           - type: custom:button-card
             template:
               - device_card
-            entity: light.aupu_cn_672663288_s368m2_s_2
+            entity: light.aupu_cn_672663288_s368m2_s_2_light
             name: 灯
             icon: mdi:light-recessed
             variables:

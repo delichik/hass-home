@@ -44,7 +44,7 @@ fan_oscillate_button:
       "oscillating": "[[[ return !entity.attributes['oscillating']; ]]]"
   state:
     - operator: template
-      value: "[[[ return entity.attributes['oscillating'] == 'on' ]]]"
+      value: "[[[ return entity.attributes['oscillating'] ]]]"
       styles:
         icon:
           - background: var(--state-active-color)

@@ -4,4 +4,24 @@ path: living-cat_eye
 subview: true
 cards:
   - type: vertical-stack
-    cards: []
+    cards:
+      - type: custom:button-card
+        entity: sensor.midr_cn_1107165351_ph300_battery_level_p_5_1
+        name: 电池电量
+        template:
+          - display_card
+      - type: custom:button-card
+        entity: event.midr_cn_1107165351_ph300_doorbell_ring_e_2_1
+        name: 有人按门铃
+        template:
+          - display_card
+      - type: custom:button-card
+        entity: event.midr_cn_1107165351_ph300_someone_passed_by_e_2_3
+        name: 有人经过
+        template:
+          - display_card
+      - type: custom:button-card
+        entity: event.midr_cn_1107165351_ph300_someone_at_the_door_e_2_4
+        name: 有人在门前停留
+        template:
+          - display_card

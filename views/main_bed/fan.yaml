@@ -8,18 +8,18 @@ cards:
       - type: custom:button-card
         template:
           - fan_power_button
-        entity: fan.dmaker_cn_510438740_p8_s_2
+        entity: fan.dmaker_cn_510438740_p8_s_2_fan
         name: 电源
 
       - type: custom:button-card
-        entity: fan.dmaker_cn_510438740_p8_s_2
+        entity: fan.dmaker_cn_510438740_p8_s_2_fan
         template:
           - xiaomi_fan_speed_selector
 
       - type: custom:button-card
         template:
           - fan_oscillate_button
-        entity: fan.dmaker_cn_510438740_p8_s_2
+        entity: fan.dmaker_cn_510438740_p8_s_2_fan
 
       - type: custom:button-card
         template:

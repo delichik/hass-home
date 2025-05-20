@@ -4,4 +4,19 @@ path: living-camera
 subview: true
 cards:
   - type: vertical-stack
-    cards: []
+    cards:
+      - type: custom:button-card
+        entity: switch.chuangmi_cn_1074898616_069a01_motion_detection_p_5_1
+        name: 移动检测
+        template:
+          - switch_button
+      - type: custom:button-card
+        entity: event.chuangmi_cn_1074898616_069a01_people_motion_e_15_2
+        name: 有人移动
+        template:
+          - display_card
+      - type: custom:button-card
+        entity: event.chuangmi_cn_1074898616_069a01_event_motion_e_15_1
+        name: 移动事件
+        template:
+          - display_card

@@ -4,4 +4,19 @@ path: kitchen-dishwasher
 subview: true
 cards:
   - type: vertical-stack
-    cards: []
+    cards:
+      - type: custom:button-card
+        template:
+          - switch_button
+        entity: switch.211106237561072_power
+        name: 电源
+      - type: custom:button-card
+        template:
+          - switch_button
+        entity: switch.211106237561072_storage
+        name: 保管开关
+      - type: custom:button-card
+        template:
+          - switch_button
+        entity: lock.211106237561072_child_lock
+        name: 童锁

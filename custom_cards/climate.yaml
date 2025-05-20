@@ -33,6 +33,8 @@ climate_temperature:
       card:
         type: custom:button-card
         name: "[[[ return entity.attributes.target_temperature.toFixed(1) ]]]"
+        state_display: "[[[ return entity.attributes.current_temperature.toFixed(1) ]]]"
+        show_state: true
         show_icon: false
         template:
           - transparent
@@ -40,9 +42,11 @@ climate_temperature:
           name:
             - font-size: 32px
             - font-weight: bold
+          state:
+            - font-size: 12px
           card:
             - padding-top: 16px
-            - padding-bottom: 16px
+            - padding-bottom: 0
     plus:
       card:
         type: custom:button-card
@@ -85,7 +89,7 @@ midea_climate_fan_speed:
           - selection_attribute_item
           - disable_when_off
         tap_action:
-          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          action: "[[[ if (entity.state != 'off' && entity.state != 'unavailable') return 'call-service'; else return 'null'; ]]]"
           service: 'climate.set_fan_mode'
           target:
             entity_id: "[[[ return entity.entity_id ]]]"
@@ -103,7 +107,7 @@ midea_climate_fan_speed:
           - selection_attribute_item
           - disable_when_off
         tap_action:
-          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          action: "[[[ if (entity.state != 'off' && entity.state != 'unavailable') return 'call-service'; else return 'null'; ]]]"
           service: 'climate.set_fan_mode'
           target:
             entity_id: "[[[ return entity.entity_id ]]]"
@@ -122,7 +126,7 @@ midea_climate_fan_speed:
           - selection_attribute_item
           - disable_when_off
         tap_action:
-          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          action: "[[[ if (entity.state != 'off' && entity.state != 'unavailable') return 'call-service'; else return 'null'; ]]]"
           service: 'climate.set_fan_mode'
           target:
             entity_id: "[[[ return entity.entity_id ]]]"
@@ -140,7 +144,7 @@ midea_climate_fan_speed:
           - selection_attribute_item
           - disable_when_off
         tap_action:
-          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          action: "[[[ if (entity.state != 'off' && entity.state != 'unavailable') return 'call-service'; else return 'null'; ]]]"
           service: 'climate.set_fan_mode'
           target:
             entity_id: "[[[ return entity.entity_id ]]]"
@@ -158,7 +162,7 @@ midea_climate_fan_speed:
           - selection_attribute_item
           - disable_when_off
         tap_action:
-          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          action: "[[[ if (entity.state != 'off' && entity.state != 'unavailable') return 'call-service'; else return 'null'; ]]]"
           service: 'climate.set_fan_mode'
           target:
             entity_id: "[[[ return entity.entity_id ]]]"
@@ -178,7 +182,7 @@ midea_climate_fan_speed:
           - disable_when_off
           - selection_attribute_item
         tap_action:
-          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          action: "[[[ if (entity.state != 'off' && entity.state != 'unavailable') return 'call-service'; else return 'null'; ]]]"
           service: 'climate.set_fan_mode'
           target:
             entity_id: "[[[ return entity.entity_id ]]]"
@@ -210,24 +214,8 @@ midea_climate_mode:
           data:
             hvac_mode: auto
         variables:
-          active: "[[[ return entity.attributes['mode'] == 0 ]]]"
-    b1:
-      card:
-        type: custom:button-card
-        icon: mdi:heat-wave
-        name: 供暖
-        template:
-          - selection_attribute_item
-        tap_action:
-          action: call-service
-          service: 'climate.set_hvac_mode'
-          target:
-            entity_id: "[[[ return entity.entity_id ]]]"
-          data:
-            hvac_mode: heat
-        variables:
           active: "[[[ return entity.attributes['mode'] == 1 ]]]"
-    b2:
+    b1:
       card:
         type: custom:button-card
         icon: mdi:snowflake
@@ -243,6 +231,22 @@ midea_climate_mode:
             hvac_mode: cool
         variables:
           active: "[[[ return entity.attributes['mode'] == 2 ]]]"
+    b2:
+      card:
+        type: custom:button-card
+        icon: mdi:heat-wave
+        name: 供暖
+        template:
+          - selection_attribute_item
+        tap_action:
+          action: call-service
+          service: 'climate.set_hvac_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            hvac_mode: heat
+        variables:
+          active: "[[[ return entity.attributes['mode'] == 3 ]]]"
     b3:
       card:
         type: custom:button-card
@@ -258,7 +262,7 @@ midea_climate_mode:
           data:
             hvac_mode: dry
         variables:
-          active: "[[[ return entity.attributes['mode'] == 3 ]]]"
+          active: "[[[ return entity.attributes['mode'] == 4 ]]]"
     b4:
       card:
         type: custom:button-card
@@ -274,7 +278,7 @@ midea_climate_mode:
           data:
             hvac_mode: fan_only
         variables:
-          active: "[[[ return entity.attributes['mode'] == 4 ]]]"
+          active: "[[[ return entity.attributes['mode'] == 5 ]]]"
 
 aupu_climate_mode:
   type: custom:button-card

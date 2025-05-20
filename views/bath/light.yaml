@@ -8,7 +8,7 @@ cards:
       - type: custom:button-card
         template:
           - switch_button
-        entity: light.aupu_cn_672663288_s368m2_s_2
+        entity: light.aupu_cn_672663288_s368m2_s_2_light
         name: 灯
         icon: mdi:power
       - type: custom:button-card

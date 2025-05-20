@@ -23,12 +23,14 @@ cards:
         [[[ if (['paused', 'docked', 'unavailable'].includes(entity.state)) return 'vacuum.start'; else return 'vacuum.stop'; ]]]
       data:
         entity_id: "[[[ return entity.entity_id; ]]]"
+
   - type: custom:button-card
     aspect_ratio: 1/1
     template:
       - image
     variables:
       image_url: "[[[ return 'url(\"' + states['image.p10s_pro_map_0'].attributes.entity_picture + '\")'; ]]]"
+
   - type: custom:button-card
     icon: mdi:home
     entity: vacuum.p10s_pro
@@ -52,6 +54,7 @@ cards:
           - condition: state
             entity: vacuum.p10s_pro
             state_not: unavailable
+
   - type: custom:button-card
     icon: mdi:home
     entity: vacuum.p10s_pro
@@ -75,15 +78,58 @@ cards:
           - condition: state
             entity: vacuum.p10s_pro
             state_not: unavailable
+
   - type: custom:button-card
     entity: vacuum.p10s_pro
     template:
       - vacuum_strength_selector
+
   - type: custom:button-card
     entity: select.p10s_pro_mop_mode
     template:
       - mop_mode_selector
+
   - type: custom:button-card
     entity: select.p10s_pro_mop_intensity
     template:
       - mop_strength_selector
+
+  - type: vertical-stack
+    cards:
+      - type: heading
+        icon: ''
+        heading: 计划
+        heading_style: title
+      - type: custom:button-card
+        entity: input_boolean.zan_ting_qing_ji_ji_hua
+        template:
+          - switch_button
+      - type: custom:button-card
+        entity: input_datetime.qing_sao_kai_shi_shi_jian
+        tap_action:
+          action: more-info
+        template:
+          - display_card
+      - type: custom:button-card
+        entity: sensor.p10s_pro_last_clean_begin
+        name: 上次清扫
+        state_display: >-
+          [[[
+            function beautifyTime(mistiming){
+                mistiming = Math.round(mistiming / 1000);
+                if (mistiming < 0) mistiming = 0;
+                if (mistiming < 10) return '刚刚';
+                var postfix = '前';
+                var arrr = ['年','个月','天','小时','分钟','秒'];
+                var arrn = [31536000,2592000,86400,3600,60,1];
+                for (var i=0; i<7; i++) {
+                    var inm = Math.floor(mistiming/arrn[i]);
+                    if (inm!=0) {
+                        return inm+arrr[i] + postfix;
+                    }
+                }
+            }
+            return beautifyTime(Date.now() - Date.parse(entity.state));
+          ]]]
+        template:
+          - display_card

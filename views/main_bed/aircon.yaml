@@ -63,3 +63,27 @@ cards:
         entity: fan.211106242237414_fresh_air
         template:
           - midea_freshair_speed_selector
+  - type: vertical-stack
+    cards:
+      - type: heading
+        icon: ''
+        heading: 数据
+        heading_style: title
+      - graph: line
+        type: sensor
+        detail: 1
+        entity: sensor.211106242237414_current_energy_consumption
+        hours_to_show: 2
+        name: 当前能耗
+      - graph: line
+        type: sensor
+        detail: 1
+        entity: sensor.211106242237414_realtime_power
+        hours_to_show: 2
+        name: 实时功率
+      - graph: line
+        type: sensor
+        detail: 1
+        entity: sensor.211106242237414_total_energy_consumption
+        hours_to_show: 72
+        name: 总能耗

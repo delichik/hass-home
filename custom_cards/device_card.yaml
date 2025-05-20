@@ -17,9 +17,16 @@ device_card:
   show_state: true
   tap_action:
     action: "[[[ return entity.state == 'unavailable' ? 'none' : variables.tap_action.action; ]]]"
-#    action: "[[[ return variables.tap_action.action; ]]]"
     navigation_path: "[[[ return variables.tap_action.navigation_path; ]]]"
   styles:
+    card:
+      - background-color: >-
+          [[[
+            let tentity = variables.button_entity != "" ? states[variables.button_entity] : entity;
+            if (tentity.state == "on") return "#FFF8E1";
+            else return "var(--ha-card-background,var(--card-background-color,#fff))";
+          ]]]
+      - transition: all 0.3s ease
     grid:
       - position: relative
       - padding-left: 12px
