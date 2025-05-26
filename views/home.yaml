@@ -290,7 +290,7 @@ cards:
             variables:
               tap_action:
                 action: navigate
-                navigation_path: living-airpurifier
+                navigation_path: books-airpurifier
               with_button: true
               button_entity: switch.xiaomi_cn_831890581_va3_on_p_2_1
               button_action:

@@ -106,8 +106,6 @@ cards:
           - switch_button
       - type: custom:button-card
         entity: input_datetime.qing_sao_kai_shi_shi_jian
-        tap_action:
-          action: more-info
         template:
           - display_card
       - type: custom:button-card

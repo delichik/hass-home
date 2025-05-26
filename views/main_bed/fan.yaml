@@ -17,6 +17,11 @@ cards:
           - xiaomi_fan_speed_selector
 
       - type: custom:button-card
+        entity: fan.dmaker_cn_510438740_p8_s_2_fan
+        template:
+          - xiaomi_fan_preset_selector
+
+      - type: custom:button-card
         template:
           - fan_oscillate_button
         entity: fan.dmaker_cn_510438740_p8_s_2_fan
@@ -41,7 +46,6 @@ cards:
         entity: switch.dmaker_cn_510438740_p8_brightness_p_2_12
         name: 指示灯
         icon: mdi:lightbulb
-        columns: 2
 
       - type: custom:mushroom-number-card
         name: 延时关闭

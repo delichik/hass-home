@@ -25,16 +25,15 @@ fan_power_button:
     service: "[[[ if (entity.state == 'off') return 'fan.turn_on'; else return 'fan.turn_off'; ]]]"
     data:
       entity_id: "[[[ return entity.entity_id; ]]]"
-  state:
-    - value: 'on'
-      spin: true
 
 fan_oscillate_button:
   type: custom:button-card
-  name: 扫风
+  name: "[[[ return '扫风' ]]]"
   icon: mdi:swap-horizontal
   template:
     - switch_button
+  variables:
+    now_on: "[[[ return entity.attributes['oscillating']; ]]]"
   tap_action:
     action: call-service
     service: 'fan.oscillate'
@@ -42,13 +41,6 @@ fan_oscillate_button:
       entity_id: "[[[ return entity.entity_id ]]]"
     data:
       "oscillating": "[[[ return !entity.attributes['oscillating']; ]]]"
-  state:
-    - operator: template
-      value: "[[[ return entity.attributes['oscillating'] ]]]"
-      styles:
-        icon:
-          - background: var(--state-active-color)
-          - color: white
 
 xiaomi_fan_speed_selector:
   type: custom:button-card
@@ -115,6 +107,54 @@ xiaomi_fan_speed_selector:
             percentage: 100
         variables:
           active: "[[[ return entity.attributes['percentage'] == 100 ]]]"
+
+xiaomi_fan_preset_selector:
+  type: custom:button-card
+  name: 预设
+  template:
+    - extended_card
+    - disable_when_off
+  styles:
+    grid:
+      - grid-template-areas: '''n n'' ''b0 b1'' '
+      - grid-template-columns: '1fr 1fr'
+  custom_fields:
+    b0:
+      card:
+        type: custom:button-card
+        icon: mdi:arrow-right-bold
+        name: 直吹风
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'fan.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: 直吹风
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == '直吹风' ]]]"
+    b1:
+      card:
+        type: custom:button-card
+        icon: mdi:tree
+        name: 睡眠风
+        entity: "[[[ return entity.entity_id; ]]]"
+        template:
+          - selection_attribute_item
+          - disable_when_off
+        tap_action:
+          action: "[[[ if (entity.state == 'on') return 'call-service'; else return 'null'; ]]]"
+          service: 'fan.set_preset_mode'
+          target:
+            entity_id: "[[[ return entity.entity_id ]]]"
+          data:
+            preset_mode: 睡眠风
+        variables:
+          active: "[[[ return entity.attributes['preset_mode'] == '睡眠风' ]]]"
 
 midea_freshair_speed_selector:
   type: custom:button-card

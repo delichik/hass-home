@@ -79,6 +79,8 @@ display_card:
   template:
     - card
     - transition_icon
+  tap_action:
+    action: more-info
   styles:
     grid:
       - grid-template-areas: '''i n s'''
@@ -168,6 +170,8 @@ switch_button:
     - card
     - transition_icon
     - disable_when_unavailable
+  variables:
+    now_on: ''
   styles:
     grid:
       - grid-template-areas: '''i n'''
@@ -176,7 +180,8 @@ switch_button:
       - justify-self: start
       - text-align: left
       - padding-left: 6px
-      - font-size: 14px
+      - font-size: 16px
+      - font-weight: bold
     icon:
       - height: 24px
       - width: 24px
@@ -186,16 +191,22 @@ switch_button:
       - background-color: "#cfe6f9"
       - color: "#2196f3"
     card:
-      - background-color: '[[[if (entity.state == "on") return "#FFF8E1"; else return "var(--ha-card-background,var(--card-background-color,#fff))";]]]'
+      - background-color: "var(--ha-card-background,var(--card-background-color,#fff))"
       - transition: all 0.3s ease
   tap_action:
     action: toggle
   state:
-    - value: 'on'
+    - operator: template
+      value: "[[[ console.log(entity); if (variables.now_on !== '') return variables.now_on; return entity.state == 'on'; ]]]"
       styles:
         icon:
           - background: var(--state-active-color)
           - color: white
+        card:
+          - background-color: "#FFF8E1"
+          - transition: all 0.3s ease
+          - box-shadow: 0px 2px 5px rgba(255, 202, 40, 0.6);
+
 
 switch_button_mini:
   type: custom:button-card
@@ -203,6 +214,9 @@ switch_button_mini:
     - card
     - transition_icon
     - disable_when_unavailable
+  variables:
+    now_on: ''
+    spin_when_on: false
   styles:
     grid:
       - grid-template-areas: '''i n'''
@@ -211,7 +225,7 @@ switch_button_mini:
       - justify-self: start
       - text-align: left
       - padding-left: 4px
-      - font-size: 14px
+      - font-size: 12px
     icon:
       - height: 26px
       - width: 26px
@@ -221,16 +235,22 @@ switch_button_mini:
       - color: "#2196f3"
       - border-radius: 50%
     card:
-      - background-color: '[[[if (entity.state == "on") return "#FFF8E1"; else return "var(--ha-card-background,var(--card-background-color,#fff))";]]]'
+      - background-color: "var(--ha-card-background,var(--card-background-color,#fff))"
       - transition: all 0.3s ease
   tap_action:
     action: toggle
   state:
-    - value: 'on'
+    - operator: template
+      value: "[[[ if (variables.now_on !== '') return variables.now_on; return entity.state == 'on'; ]]]"
+      spin: "[[[ return variables.spin_when_on; ]]]"
       styles:
         icon:
           - background: var(--state-active-color)
           - color: white
+        card:
+          - background-color: "#FFF8E1"
+          - transition: all 0.3s ease
+          - box-shadow: 0px 2px 5px rgba(255, 202, 40, 0.6);
 
 image:
   type: custom:button-card

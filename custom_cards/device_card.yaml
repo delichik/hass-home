@@ -26,6 +26,12 @@ device_card:
             if (tentity.state == "on") return "#FFF8E1";
             else return "var(--ha-card-background,var(--card-background-color,#fff))";
           ]]]
+      - box-shadow: >-
+          [[[
+            let tentity = variables.button_entity != "" ? states[variables.button_entity] : entity;
+            if (tentity.state == "on") return "0px 2px 5px rgba(255, 202, 40, 0.6);";
+            else return "unset";
+          ]]]
       - transition: all 0.3s ease
     grid:
       - position: relative
@@ -41,11 +47,12 @@ device_card:
     name:
       - align-self: middle
       - justify-self: start
-      - font-size: 80%
+      - font-size: 14px
+      - font-weight: bold
     state:
       - justify-self: start
       - color: gray
-      - font-size: 80%
+      - font-size: 14px
     img_cell:
       - justify-content: start
       - align-items: start

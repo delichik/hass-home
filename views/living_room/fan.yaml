@@ -17,6 +17,11 @@ cards:
           - xiaomi_fan_speed_selector
 
       - type: custom:button-card
+        entity: fan.dmaker_cn_810170850_p8_s_2_fan
+        template:
+          - xiaomi_fan_preset_selector
+
+      - type: custom:button-card
         template:
           - fan_oscillate_button
         entity: fan.dmaker_cn_810170850_p8_s_2_fan
