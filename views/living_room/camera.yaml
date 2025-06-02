@@ -13,46 +13,12 @@ cards:
       - type: custom:button-card
         entity: event.chuangmi_cn_1074898616_069a01_people_motion_e_15_2
         name: 有人移动
-        state_display: >-
-          [[[
-            function beautifyTime(mistiming){
-                mistiming = Math.round(mistiming / 1000);
-                if (mistiming < 0) mistiming = 0;
-                if (mistiming < 10) return '刚刚';
-                var postfix = '前';
-                var arrr = ['年','个月','天','小时','分钟','秒'];
-                var arrn = [31536000,2592000,86400,3600,60,1];
-                for (var i=0; i<7; i++) {
-                    var inm = Math.floor(mistiming/arrn[i]);
-                    if (inm!=0) {
-                        return inm+arrr[i] + postfix;
-                    }
-                }
-            }
-            return beautifyTime(Date.now() - Date.parse(entity.state));
-          ]]]
+        state_display: "[[[ return helpers.relativeTime(entity.state) ]]]"
         template:
           - display_card
       - type: custom:button-card
         entity: event.chuangmi_cn_1074898616_069a01_event_motion_e_15_1
         name: 移动事件
-        state_display: >-
-          [[[
-            function beautifyTime(mistiming){
-                mistiming = Math.round(mistiming / 1000);
-                if (mistiming < 0) mistiming = 0;
-                if (mistiming < 10) return '刚刚';
-                var postfix = '前';
-                var arrr = ['年','个月','天','小时','分钟','秒'];
-                var arrn = [31536000,2592000,86400,3600,60,1];
-                for (var i=0; i<7; i++) {
-                    var inm = Math.floor(mistiming/arrn[i]);
-                    if (inm!=0) {
-                        return inm+arrr[i] + postfix;
-                    }
-                }
-            }
-            return beautifyTime(Date.now() - Date.parse(entity.state));
-          ]]]
+        state_display: "[[[ return helpers.relativeTime(entity.state) ]]]"
         template:
           - display_card

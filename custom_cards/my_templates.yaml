@@ -63,6 +63,10 @@ extended_card:
   show_icon: false
   show_label: false
   styles:
+    card:
+      - cursor: auto
+      - pointer-events: inherit
+      - --mdc-ripple-press-opacity: 0
     grid:
       - margin-top: 0
       - row-gap: 1ch;
@@ -164,7 +168,7 @@ selection_attribute_item:
           - background: var(--state-active-color)
           - color: white
 
-switch_button:
+button:
   type: custom:button-card
   template:
     - card
@@ -172,6 +176,8 @@ switch_button:
     - disable_when_unavailable
   variables:
     now_on: ''
+  tap_action:
+    action: toggle
   styles:
     grid:
       - grid-template-areas: '''i n'''
@@ -191,13 +197,44 @@ switch_button:
       - background-color: "#cfe6f9"
       - color: "#2196f3"
     card:
-      - background-color: "var(--ha-card-background,var(--card-background-color,#fff))"
-      - transition: all 0.3s ease
+      - background-color: "var(--ha-card-background, var(--card-background-color,#fff))"
+
+switch_button:
+  type: custom:button-card
+  template:
+    - card
+    - transition_icon
+    - disable_when_unavailable
+  variables:
+    now_on: ''
+    switcher_tap_action:
+      action: toggle
   tap_action:
     action: toggle
+  styles:
+    grid:
+      - grid-template-areas: '''i n s'''
+      - grid-template-columns: 2fr 11fr 3fr
+    name:
+      - justify-self: start
+      - text-align: left
+      - padding-left: 6px
+      - font-size: 16px
+      - font-weight: bold
+    icon:
+      - height: 24px
+      - width: 24px
+      - padding: 6px
+      - font-size: 16px
+      - border-radius: 50%
+      - background-color: "#cfe6f9"
+      - color: "#2196f3"
+    card:
+      - background-color: "var(--ha-card-background, var(--card-background-color,#fff))"
+      - transition: all 0.3s ease
   state:
     - operator: template
-      value: "[[[ console.log(entity); if (variables.now_on !== '') return variables.now_on; return entity.state == 'on'; ]]]"
+      value: "[[[ if (variables.now_on !== '') return variables.now_on; return entity.state == 'on'; ]]]"
       styles:
         icon:
           - background: var(--state-active-color)
@@ -206,7 +243,48 @@ switch_button:
           - background-color: "#FFF8E1"
           - transition: all 0.3s ease
           - box-shadow: 0px 2px 5px rgba(255, 202, 40, 0.6);
-
+  custom_fields:
+    s:
+      card:
+        type: custom:button-card
+        entity: "[[[ return entity.entity_id ]]]"
+        show_name: false
+        template:
+          - card
+          - transition_icon
+        tap_action: "[[[ return variables.switcher_tap_action ]]]"
+        styles:
+          grid:
+            - padding: 0
+            - margin: 0
+          icon:
+            - padding: 0
+            - margin: 0
+            - top: 4px
+            - bottom: 4px
+            - left: 4px
+            - right: unset
+            - width: 20px
+            - height: 20px
+            - border-radius: 50%
+            - background-color: "#2196f3"
+            - color: "rgba(0,0,0,0)"
+          card:
+            - padding: 0
+            - margin: 0
+            - height: 28px
+            - background-color: "#cfe6f9"
+            - box-shadow: none
+        state:
+          - operator: template
+            value: "[[[ if (variables.now_on !== '') return variables.now_on; return entity.state == 'on'; ]]]"
+            styles:
+              icon:
+                - background: "#FFF8E1"
+                - left: unset
+                - right: 4px
+              card:
+                - background-color: var(--state-active-color)
 
 switch_button_mini:
   type: custom:button-card
@@ -216,7 +294,6 @@ switch_button_mini:
     - disable_when_unavailable
   variables:
     now_on: ''
-    spin_when_on: false
   styles:
     grid:
       - grid-template-areas: '''i n'''
@@ -242,7 +319,6 @@ switch_button_mini:
   state:
     - operator: template
       value: "[[[ if (variables.now_on !== '') return variables.now_on; return entity.state == 'on'; ]]]"
-      spin: "[[[ return variables.spin_when_on; ]]]"
       styles:
         icon:
           - background: var(--state-active-color)

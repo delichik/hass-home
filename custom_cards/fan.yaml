@@ -19,6 +19,13 @@ fan_power_button:
   icon: mdi:fan
   template:
     - switch_button
+  variables:
+    switcher_tap_action:
+      action: call-service
+      entity: "[[[ return entity.entity_id; ]]]"
+      service: "[[[ if (entity.state == 'off') return 'fan.turn_on'; else return 'fan.turn_off'; ]]]"
+      data:
+        entity_id: "[[[ return entity.entity_id; ]]]"
   tap_action:
     action: call-service
     entity: "[[[ return entity.entity_id; ]]]"
@@ -34,6 +41,13 @@ fan_oscillate_button:
     - switch_button
   variables:
     now_on: "[[[ return entity.attributes['oscillating']; ]]]"
+    switcher_tap_action:
+      action: call-service
+      service: 'fan.oscillate'
+      target:
+        entity_id: "[[[ return entity.entity_id ]]]"
+      data:
+        "oscillating": "[[[ return !entity.attributes['oscillating']; ]]]"
   tap_action:
     action: call-service
     service: 'fan.oscillate'

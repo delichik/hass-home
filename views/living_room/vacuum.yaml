@@ -15,7 +15,7 @@ cards:
       ]]]
     entity: vacuum.p10s_pro
     template:
-      - switch_button
+      - button
     tap_action:
       action: call-service
       entity: "[[[ return entity.entity_id; ]]]"
@@ -32,10 +32,18 @@ cards:
       image_url: "[[[ return 'url(\"' + states['image.p10s_pro_map_0'].attributes.entity_picture + '\")'; ]]]"
 
   - type: custom:button-card
-    icon: mdi:home
+    icon: mdi:pause
     entity: vacuum.p10s_pro
+    name: 暂停
     template:
       - switch_button
+    variables:
+      switcher_tap_action:
+        action: call-service
+        entity: "[[[ return entity.entity_id; ]]]"
+        service: "vacuum.pause"
+        data:
+          entity_id: "[[[ return entity.entity_id; ]]]"
     tap_action:
       action: call-service
       entity: "[[[ return entity.entity_id; ]]]"
@@ -56,10 +64,11 @@ cards:
             state_not: unavailable
 
   - type: custom:button-card
-    icon: mdi:home
+    icon: mdi:home-import-outline
     entity: vacuum.p10s_pro
+    name: 返回基站
     template:
-      - switch_button
+      - button
     tap_action:
       action: call-service
       entity: "[[[ return entity.entity_id; ]]]"

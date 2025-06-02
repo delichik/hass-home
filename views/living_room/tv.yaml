@@ -18,6 +18,15 @@ cards:
           - disable_when
         entity: media_player.tv
         name: 电源
+        variables:
+          disable_when: "[[[ return ['off', 'unavailable'].includes(entity.state) ]]]"
+          switcher_tap_action:
+            action: "[[[ return ['off', 'unavailable'].includes(entity.state) ? 'none' : 'call-service'; ]]]"
+            entity: "[[[ return entity.entity_id; ]]]"
+            service: >-
+              [[[ return ['off', 'unavailable'].includes(entity.state) ? 'media_player.turn_on' : 'media_player.turn_off'; ]]]
+            data:
+              entity_id: "[[[ return entity.entity_id; ]]]"
         tap_action:
           action: "[[[ return ['off', 'unavailable'].includes(entity.state) ? 'none' : 'call-service'; ]]]"
           entity: "[[[ return entity.entity_id; ]]]"
@@ -25,8 +34,6 @@ cards:
             [[[ return ['off', 'unavailable'].includes(entity.state) ? 'media_player.turn_on' : 'media_player.turn_off'; ]]]
           data:
             entity_id: "[[[ return entity.entity_id; ]]]"
-        variables:
-          disable_when: "[[[ return ['off', 'unavailable'].includes(entity.state) ]]]"
       - type: custom:button-card
         entity: media_player.tv
         variables:
